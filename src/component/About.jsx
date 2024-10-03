@@ -1,27 +1,27 @@
+
+
 import React, { useState } from 'react'
 import aboutimg from "../image/about.jpg"
 
-
-
 const About = () => {
 
-  const [firstName, setFirstName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     // Log the form data
-    console.log("First Name:", firstName);
+    console.log("Full Name:", fullName);
     console.log("Email:", email);
 
     // Optionally, add your logic for sending data to a backend or displaying a confirmation
     alert(
-      `Thanks for signing up, ${firstName}! We'll send updates to ${email}.`
+      `Thanks for signing up, ${fullName}! We'll send updates to ${email}.`
     );
 
     // Reset form after submission
-    setFirstName("");
+    setFullName("");
     setEmail("");
   };
   return (
@@ -139,8 +139,8 @@ const About = () => {
                     id="first-name"
                     className="w-full px-4 py-2 border rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300"
                     placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                     required
                   />
                 </div>

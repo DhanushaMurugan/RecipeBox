@@ -5,8 +5,7 @@ import StartHerePage from './component/StartHerePage';
 import './App.css';
 import About from './component/About';
 import Recipes from './component/Recipes';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Route,Routes } from 'react-router-dom';
+
 
 import {BrowserRouter as Router} from "react-router-dom";
 import {Route, Routes} from "react-router-dom";
