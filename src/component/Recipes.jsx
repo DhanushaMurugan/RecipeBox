@@ -11,7 +11,9 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import idimg from "../image/idimg.jpg";
 import recipefooterimg from "../image/recipefooterimg.jpg";
+import { useNavigate } from "react-router";
 function Recipes() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [allRecipes, setAllRecipes] = useState([]); // State to hold all recipes
@@ -1008,6 +1010,14 @@ function Recipes() {
           </div>
         </div>
       )}
+      <div className=" flex justify-end items-end pt-16 pr-16 pb-10">
+        <button
+          className="text-white bg-customPurple border px-2 text-lg font-medium "
+          onClick={() => navigate("/About")}
+        >
+          Back
+        </button>
+      </div>
     </div>
   );
 }

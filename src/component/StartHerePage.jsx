@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import recipe7 from "../Images/recipe7.jpg";
 import { HeartIcon } from "@heroicons/react/24/outline";
@@ -12,12 +12,35 @@ import meal2 from "../Images/meal2.jpg";
 import meal3 from "../Images/meal3.png";
 import meal4 from "../Images/meal4.png";
 import mealHead from "../Images/mealHead.png";
+import axios from "axios";
+import { useNavigate } from "react-router";
 function StartHerePage() {
   const navigate = useNavigate();
+  //declaration for sea food
+  const [searchSeafoodResults, setSearchSeafoodResults] = useState([]); // Store search results
+  // const [loading, setLoading] = useState(false); // Loading state
+  const [isSeafoodRecipeModalOpen, setIsSeafoodRecipeModalOpen] =
+    useState(false); // Control recipe modal
+  const [SeafoodselectedMeal, setSeafoodSelectedMeal] = useState(null); // Store selected meal details
+  const [SeafoodmealDetails, setSeafoodMealDetails] = useState(null); // Store detailed meal info
 
+  //declaration for random meals
+  const [meal, setMeal] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  //declaration for search bar
+  const [searchTerm, setSearchTerm] = useState(""); // User input for search (ingredient)
+  const [searchResults, setSearchResults] = useState([]); // Store search results
+  const [loading, setLoading] = useState(false); // Loading state
+  const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false); // Control recipe modal
+  const [selectedMeal, setSelectedMeal] = useState(null); // Store selected meal details
+  const [mealDetails, setMealDetails] = useState(null); // Store detailed meal info
+
+  // declaration to sign up
   const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
 
- 
+  // function to sign up
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,122 +56,117 @@ function StartHerePage() {
     setEmail("");
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
+  //function for search bar
+  // Function to fetch recipe based on ingredient input
+  const searchRecipes = (term) => {
+    if (term.trim() === "") return; // Don't search if the input is empty
 
-  // Function to handle sign up submit
-  const submit = (e) => {
-    e.preventDefault();
-    if (fullName && email) {
-      const signUp = {
-        name: fullName,
-        email: email,
-      };
+    setLoading(true);
+    axios
+      .get(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${term}`)
+      .then((response) => {
+        if (response.data.meals) {
+          setSearchResults(response.data.meals); // Store the results
+          setIsRecipeModalOpen(true); // Open the modal to display the results
+        } else {
+          setSearchResults([]); // Clear results if no match is found
+        }
+      })
+      .catch((error) => console.error("Error fetching search results:", error))
+      .finally(() => setLoading(false));
+  };
+  // Fetch meal details based on selected meal ID
+  const fetchMealDetails = (mealId) => {
+    setLoading(true);
+    axios
+      .get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
+      .then((response) => {
+        if (response.data.meals) {
+          setMealDetails(response.data.meals[0]); // Store detailed meal info
+        }
+      })
+      .catch((error) => console.error("Error fetching meal details:", error))
+      .finally(() => setLoading(false));
+  };
 
-      // Display success message
-      alert(
-        `Sign-up successful! ${fullName}, we will send new recipes to your ${email}`
+  // Debounce function to delay the API call
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTerm) {
+        searchRecipes(searchTerm);
+      }
+    }, 500); // Adjust the delay (500ms) as needed
+
+    return () => clearTimeout(delayDebounceFn); // Cleanup on unmount or new search term
+  }, [searchTerm]);
+
+  // Close recipe modal
+  const closeRecipeModal = () => setIsRecipeModalOpen(false);
+
+  // Close detailed modal
+  const closeDetailsModal = () => {
+    setSelectedMeal(null);
+    setMealDetails(null);
+  };
+
+  //function code for random meals
+  const fetchRandomMeal = async () => {
+    try {
+      const response = await fetch(
+        "https://www.themealdb.com/api/json/v1/1/random.php"
       );
-
-      setFullName([...fullName, signUp]);
-      // Close the modal and reset the form
-      setIsModalOpen(false);
-      setFullName("");
-      setEmail("");
-    } else {
-      alert("Please fill in all fields.");
+      const data = await response.json();
+      setMeal(data.meals[0]);
+      setShowModal(true); // Show modal after fetching the meal
+    } catch (error) {
+      console.error("Error fetching the meal:", error);
     }
   };
+  const closeModal = () => setShowModal(false);
 
-  // Function to open the modal
-  const openModal = () => {
-    setIsModalOpen(true);
+
+// Function to fetch seafood recipes
+  const fetchSeafoodRecipes = () => {
+    setLoading(true);
+    axios
+      .get("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood")
+      .then((response) => {
+        if (response.data.meals) {
+          setSearchSeafoodResults(response.data.meals); // Store the seafood results
+          setIsSeafoodRecipeModalOpen(true); // Open the modal to display the results
+        } else {
+          setSearchSeafoodResults([]); // Clear results if no match is found
+        }
+      })
+      .catch((error) => console.error("Error fetching seafood recipes:", error))
+      .finally(() => setLoading(false));
   };
 
-  // Function to close the modal
-  const closeModal = () => {
-    setIsModalOpen(false);
+//function code for sea food
+  // Fetch meal details based on selected meal ID
+  const fetchSeafoodMealDetails = (mealId) => {
+    setLoading(true);
+    axios
+      .get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
+      .then((response) => {
+        if (response.data.meals) {
+          setSeafoodMealDetails(response.data.meals[0]); // Store detailed meal info
+        }
+      })
+      .catch((error) => console.error("Error fetching meal details:", error))
+      .finally(() => setLoading(false));
   };
 
+  // Close recipe modal
+  const closeSeafoodRecipeModal = () => setIsSeafoodRecipeModalOpen(false);
+
+  // Close detailed modal
+  const closeSeafoodDetailsModal = () => {
+    setSeafoodSelectedMeal(null);
+    setSeafoodMealDetails(null);
+  };
   return (
     <div>
-      <div class=" bg-customPurple text-zinc-300 p-4 tracking-widest font-bold font-domine text-center">
-        <p>
-          OUR RECIPES, YOUR INBOX.{" "}
-          <button onClick={openModal}>
-            <span className="text-white">SIGN UP</span>
-          </button>
-        </p>
-      </div>
-      <div className="bg-white shadow-md py-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div>
-            <h1 className="font-domine font-semibold text-5xl text-customPurple">
-              Recipe Box 
-            </h1>
-          </div>
-
-          <div className="flex items-center space-x-8">
-            <p
-              className="text-lg font-semibold cursor-pointer"
-              onClick={() => navigate("/")}
-            >
-              HOME
-            </p>
-            <p className="text-lg font-semibold cursor-pointer">ABOUT</p>
-            <p className="text-lg font-semibold cursor-pointer">RECIPES</p>
-            <p className="text-lg font-semibold cursor-pointer">START HERE</p>
-            <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
-          </div>
-        </div>
-      </div>
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg w-full max-w-md mx-auto p-6 relative">
-            <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-              onClick={closeModal}
-            >
-              ✖
-            </button>
-            <h2 className="text-xl font-bold mb-4">Sign Up</h2>
-            <form onSubmit={submit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
-                  placeholder="Enter your Full Name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
-                  placeholder="Enter your Email Address"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full h-12 bg-green-600 text-white hover:bg-green-700 rounded-md p-3"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
       <div className="flex justify-center text-center items-center pt-10">
         <div className="bg-gray-50">
           <img
@@ -198,7 +216,9 @@ function StartHerePage() {
           <div className="relative w-full max-w-md">
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search by ingredient"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="font-semibold w-full py-3 pl-12 pr-4 bg-white border border-gray-400 rounded-lg shadow-md text-gray-700
                focus:outline-none focus:ring-4 focus:ring-[#734060] transition duration-300 ease-in-out"
             />
@@ -207,6 +227,114 @@ function StartHerePage() {
             </div>
           </div>
         </div>
+        {/*function for search bar */}
+        {/* Recipe Modal for displaying search results */}
+        {isRecipeModalOpen && searchResults.length > 0 && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
+              <button
+                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                onClick={closeRecipeModal}
+              >
+                <svg
+                  className="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              <h2 className="text-2xl font-bold mb-4">Search Results</h2>
+
+              <div className="max-h-[70vh] overflow-y-auto">
+                {loading ? (
+                  <p className="text-center text-gray-500">Loading...</p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {searchResults.map((meal) => (
+                      <div
+                        key={meal.idMeal}
+                        className="p-4 border rounded shadow-md hover:shadow-lg cursor-pointer"
+                        onClick={() => {
+                          setSelectedMeal(meal); // Store selected meal
+                          fetchMealDetails(meal.idMeal); // Fetch detailed meal info
+                          closeRecipeModal(); // Close the modal when a meal is clicked
+                        }}
+                      >
+                        <h3 className="text-lg mb-5 font-semibold">
+                          {meal.strMeal}
+                        </h3>
+                        <img
+                          src={meal.strMealThumb}
+                          alt={meal.strMeal}
+                          className="w-full h-40 object-cover mb-2 rounded"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Detailed Recipe Modal for displaying selected meal details */}
+        {mealDetails && selectedMeal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
+              <button
+                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                onClick={closeDetailsModal} // Close the detailed modal
+              >
+                <svg
+                  className="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              <h2 className="text-2xl font-bold mb-4">{mealDetails.strMeal}</h2>
+              <img
+                src={mealDetails.strMealThumb}
+                alt={mealDetails.strMeal}
+                className="w-full h-48 object-cover rounded mb-4"
+              />
+              <p className="mt-4">{mealDetails.strInstructions}</p>
+
+              <ul className="mt-4">
+                <h3 className="font-bold">Ingredients:</h3>
+                {Array.from({ length: 20 }, (_, index) => {
+                  const ingredient = mealDetails[`strIngredient${index + 1}`];
+                  const measure = mealDetails[`strMeasure${index + 1}`];
+                  return (
+                    ingredient && (
+                      <li key={index}>
+                        {ingredient} - {measure}
+                      </li>
+                    )
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        )}
+
         <p className="text-zinc-300 text-lg tracking-widest text-center py-5 ">
           or browse our favourites
         </p>
@@ -301,10 +429,54 @@ function StartHerePage() {
         <button
           class="bg-[#734060] text-white font-semibold py-2 w-96 rounded-md shadow-md hover:bg-[#5a3049] hover:scale-105 hover:opacity-90
         focus:ring-4 focus:ring-[#734060] focus:outline-none active:scale-95 transition duration-300 ease-in-out"
+          onClick={fetchRandomMeal}
         >
-          View Recipes
+          View Random Meals
         </button>
       </div>
+      {/*function for random meals */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+            >
+              &times;
+            </button>
+
+            {meal && (
+              <div className="text-center">
+                <h2 className="text-2xl font-bold mb-4">{meal.strMeal}</h2>
+                <img
+                  src={meal.strMealThumb}
+                  alt={meal.strMeal}
+                  className="mx-auto mb-4 rounded-lg"
+                  style={{ width: "300px" }}
+                />
+                <p className="text-sm">
+                  <strong>Category:</strong> {meal.strCategory}
+                </p>
+                <p className="text-sm mb-4">
+                  <strong>Area:</strong> {meal.strArea}
+                </p>
+                <p className="text-left mb-4">
+                  <strong>Instructions:</strong> {meal.strInstructions}
+                </p>
+                <a
+                  href={meal.strYoutube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-700"
+                >
+                  Watch Video Recipe
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* meals recipe */}
       <div className="flex items-center justify-center py-10">
@@ -404,10 +576,121 @@ function StartHerePage() {
         <button
           class="bg-[#734060] text-white font-semibold py-2 w-96 rounded-md shadow-md hover:bg-[#5a3049] hover:scale-105 hover:opacity-90
         focus:ring-4 focus:ring-[#734060] focus:outline-none active:scale-95 transition duration-300 ease-in-out"
+          onClick={fetchSeafoodRecipes}
         >
-          View Recipes
+          View Seafood Recipes
         </button>
       </div>
+      {/*function for sea food */}
+      {/* Recipe Modal for displaying search results */}
+      {isSeafoodRecipeModalOpen && searchSeafoodResults.length > 0 && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
+            <button
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+              onClick={closeSeafoodRecipeModal}
+            >
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <h2 className="text-2xl font-bold mb-4">Seafood Recipes</h2>
+
+            <div className="max-h-[70vh] overflow-y-auto">
+              {loading ? (
+                <p className="text-center text-gray-500">Loading...</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {searchSeafoodResults.map((meal) => (
+                    <div
+                      key={meal.idMeal}
+                      className="p-4 border rounded shadow-md hover:shadow-lg cursor-pointer"
+                      onClick={() => {
+                        setSeafoodSelectedMeal(meal); // Store selected meal
+                        fetchSeafoodMealDetails(meal.idMeal); // Fetch detailed meal info
+                        closeSeafoodRecipeModal(); // Close the modal when a meal is clicked
+                      }}
+                    >
+                      <h3 className="text-lg mb-5 font-semibold">
+                        {meal.strMeal}
+                      </h3>
+                      <img
+                        src={meal.strMealThumb}
+                        alt={meal.strMeal}
+                        className="w-full h-40 object-cover mb-2 rounded"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Detailed Recipe Modal for displaying selected meal details */}
+      {SeafoodmealDetails && SeafoodselectedMeal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
+            <button
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+              onClick={closeSeafoodDetailsModal} // Close the detailed modal
+            >
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <h2 className="text-2xl font-bold mb-4">
+              {SeafoodmealDetails.strMeal}
+            </h2>
+            <img
+              src={SeafoodmealDetails.strMealThumb}
+              alt={SeafoodmealDetails.strMeal}
+              className="w-full h-48 object-cover rounded mb-4"
+            />
+            <p className="mt-4">{SeafoodmealDetails.strInstructions}</p>
+
+            <ul className="mt-4">
+              <h3 className="font-bold">Ingredients:</h3>
+              {Array.from({ length: 20 }, (_, index) => {
+                const ingredient =
+                  SeafoodmealDetails[`strIngredient${index + 1}`];
+                const measure = SeafoodmealDetails[`strMeasure${index + 1}`];
+                return (
+                  ingredient && (
+                    <li key={index}>
+                      {ingredient} - {measure}
+                    </li>
+                  )
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      )}
 
       <div className="mt-16 text-center">
         <div className="w-full mx-auto  bg-customPurple p-8 shadow-lg rounded-lg ">
@@ -461,6 +744,14 @@ function StartHerePage() {
             </div>
           </form>
         </div>
+      </div>
+      <div className=" flex justify-end items-end pt-16 pr-16 pb-10">
+        <button
+          className="text-white bg-customPurple border px-2 text-lg font-medium "
+          onClick={() => navigate("/Recipes")}
+        >
+          Back
+        </button>
       </div>
     </div>
   );

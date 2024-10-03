@@ -1,5 +1,5 @@
 
-import NavBar from './component/NavBar';
+import Homepage from "./component/Homepage";
 import "./index.css"
 import StartHerePage from './component/StartHerePage';
 import './App.css';
@@ -8,15 +8,15 @@ import Recipes from './component/Recipes';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route,Routes } from 'react-router-dom';
 
-import {BrowserRouter as Router} from "react-router-dom";
-import {Route, Routes} from "react-router-dom";
+
+
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
 
-          <Route path="/" element={<NavBar />} />
+          <Route path="/" element={<Homepage />} />
           <Route path="/StartHerePage" element={<StartHerePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/recipes" element={<Recipes />} />
