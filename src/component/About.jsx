@@ -1,11 +1,19 @@
 
-
 import React, { useState } from 'react'
 import aboutimg from "../image/about.jpg"
+import { useNavigate } from "react-router";
+
+
+
 
 const About = () => {
 
+const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+
+
   const [fullName, setFullName] = useState("");
+
   const [email, setEmail] = useState("");
 
   // Handle form submission
@@ -172,6 +180,14 @@ const About = () => {
             </form>
           </div>
         </div>
+      </div>
+      <div className=" flex justify-end items-end pt-16">
+        <button
+          className="text-white bg-customPurple border px-2 text-lg font-medium "
+          onClick={() => navigate("/")}
+        >
+          Back
+        </button>
       </div>
     </div>
   );
