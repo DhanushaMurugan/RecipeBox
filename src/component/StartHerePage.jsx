@@ -228,6 +228,9 @@ function StartHerePage() {
             </div>
           </div>
         </div>
+        <div className="text-zinc-300 text-lg tracking-widest text-center py-5">
+          or browse our favourites
+        </div>
       </div>
 
       {/*function for search bar */}
@@ -337,10 +340,6 @@ function StartHerePage() {
           </div>
         </div>
       )}
-
-      <div className="text-zinc-300 text-lg tracking-widest text-center py-5">
-        or browse our favourites
-      </div>
 
       <div className="flex items-center justify-center py-6 sm:py-10">
         <div>
@@ -511,101 +510,89 @@ function StartHerePage() {
           </h1>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center py-10">
-        {/* Card Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-6xl px-4">
-          {/* Card 1 */}
-          <div className="flex border-2 border-slate-400 h-auto sm:h-80 items-center p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            {/* Image Container */}
-            <div className="flex-shrink-0">
-              <img
-                src={meal1}
-                alt="meal1"
-                className="h-64 w-64 object-cover rounded-md"
-              />
-            </div>
-            {/* Content Container */}
-            <div className="text-left pl-6 flex flex-col justify-between h-full">
-              <div>
-                <h1 className="text-2xl font-bold text-customPurple mt-2">
-                  Royal Saffron Chicken Biryani
-                </h1>
-                <p className="font-domine text-lg text-gray-600 py-2">
-                  This luxurious biryani is a<br />
-                  celebration of tender chicken, long-grain basmati rice, and
-                  aromatic spices, layered with the golden richness of saffron.
-                </p>
-              </div>
-            </div>
+      {/* for cut area*/}
+      <div className="flex flex-wrap justify-center sm:justify-evenly gap-6 py-6">
+        {/* Card 1 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={meal1}
+              alt="meal1"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
           </div>
-
-          {/* Card 2 */}
-          <div className="flex border-2 border-slate-400 h-auto sm:h-80 items-center p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <div className="flex-shrink-0">
-              <img
-                src={meal2}
-                alt="meal2"
-                className="h-64 w-64 object-cover rounded-md"
-              />
-            </div>
-            <div className="text-left pl-6 flex flex-col justify-between h-full">
-              <div>
-                <h1 className="text-2xl font-bold text-customPurple">
-                  Soulful Harmony Platter
-                </h1>
-                <p className="font-domine text-lg text-gray-600 py-2">
-                  This comforting meal brings together the simplicity of white
-                  rice with hearty soups, rich stews, and a flavorful chicken
-                  curry.
-                </p>
-              </div>
-            </div>
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl mt-4 font-bold">
+              Royal Saffron Chicken Biryani
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600 py-3 sm:py-5">
+              This luxurious biryani is a celebration of tender chicken,
+              long-grain basmati rice, and aromatic spices, layered with the
+              golden richness of saffron.
+            </p>
           </div>
+        </div>
 
-          {/* Card 3 */}
-          <div className="flex border-2 border-slate-400 h-auto sm:h-80 items-center p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <div className="flex-shrink-0">
-              <img
-                src={meal3}
-                alt="meal3"
-                className="h-64 w-64 object-cover rounded-md"
-              />
-            </div>
-            <div className="text-left pl-6 flex flex-col justify-between h-full">
-              <div>
-                <h1 className="text-2xl font-bold text-customPurple mt-5">
-                  Maharaja's Delight Thaali
-                </h1>
-                <p className="font-domine text-lg text-gray-600 py-2">
-                  This exquisite North Indian platter features soft, freshly
-                  made rotis, fragrant vegetable pulao, and a rich paneer curry
-                  that’s simmered in aromatic spices.
-                </p>
-              </div>
-            </div>
+        {/* Card 2 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={meal2}
+              alt="meal2"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
           </div>
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl font-bold mt-4 sm:mt-8">
+              Soulful Harmony Platter
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600  py-3 sm:py-5">
+              This comforting meal brings together the simplicity of white rice
+              with hearty soups, rich stews, and a flavorful chicken curry.
+            </p>
+          </div>
+        </div>
+      </div>
 
-          {/* Card 4 */}
-          <div className="flex border-2 border-slate-400 h-auto sm:h-80 items-center p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <div className="flex-shrink-0">
-              <img
-                src={meal4}
-                alt="meal4"
-                className="h-64 w-64 object-cover rounded-md"
-              />
-            </div>
-            <div className="text-left pl-6 flex flex-col justify-between h-full">
-              <div>
-                <h1 className="text-2xl font-bold text-customPurple">
-                  Heritage Feast Thaali
-                </h1>
-                <p className="font-domine text-lg text-gray-600 py-2">
-                  From spicy curries and tangy sambar to refreshing curd and
-                  crispy papadam, each dish showcases the rich culinary heritage
-                  of the region.
-                </p>
-              </div>
-            </div>
+      <div className="flex flex-wrap justify-center sm:justify-evenly gap-6 py-6">
+        {/* Card 1 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={meal3}
+              alt="meal3"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
+          </div>
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl mt-4 font-bold">
+              Maharaja's Delight Thaali
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600 py-3 sm:py-5">
+              This exquisite North Indian platter features soft, freshly made
+              rotis, fragrant vegetable pulao, and a rich paneer curry that’s
+              simmered in aromatic spices.
+            </p>
+          </div>
+        </div>
+        {/* Card 2 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={meal4}
+              alt="meal4"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
+          </div>
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl font-bold">
+              Heritage Feast Thaali
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600 py-3 sm:py-5">
+              From spicy curries and tangy sambar to refreshing curd and crispy
+              papadam, each dish showcases the rich culinary heritage of the
+              region.
+            </p>
           </div>
         </div>
       </div>
