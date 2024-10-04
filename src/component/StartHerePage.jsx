@@ -11,7 +11,7 @@ import meal1 from "../Images/meal1.png";
 import meal2 from "../Images/meal2.jpg";
 import meal3 from "../Images/meal3.png";
 import meal4 from "../Images/meal4.png";
-// import mealHead from "../Images/mealHead.png";
+import mealHead from "../Images/mealHead.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
 function StartHerePage() {
@@ -497,6 +497,20 @@ function StartHerePage() {
 
       {/*  */}
       {/* meals recipe */}
+      <div className="flex items-center justify-center py-10">
+        <div>
+          <img
+            src={mealHead}
+            alt="mealHead"
+            className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 text-gray-500" // Adjust size for different screen sizes
+          />
+        </div>
+        <div>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl text-customPurple font-semibold font-domine pl-3">
+            Meal Prep Recipes
+          </h1>
+        </div>
+      </div>
       <div className="flex flex-col items-center justify-center py-10">
         {/* Card Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-6xl px-4">
