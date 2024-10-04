@@ -167,25 +167,25 @@ function StartHerePage() {
   };
   return (
     <div>
-      <div className="flex justify-center text-center items-center pt-10">
+      <div className="flex flex-col md:flex-row justify-center text-center md:text-left items-center pt-4 md:pt-10">
         <div className="bg-gray-50">
           <img
             src={recipe7}
             alt="recipe7"
-            className="h-[500px] w-96 shadow-lg transition duration-300 hover:scale-105 hover:shadow-2xl hover:opacity-90"
+            className="w-full sm:w-96 h-auto shadow-lg transition duration-300 hover:scale-105 hover:shadow-2xl hover:opacity-90"
           />
         </div>
-        <div className="pl-20">
-          <h1 className="font-domine font-mediam text-5xl text-customPurple py-8">
+        <div className="md:pl-20 p-4 md:p-10">
+          <h1 className="font-domine font-medium text-3xl sm:text-5xl text-customPurple py-4 sm:py-8">
             Welcome To Recipe Box
           </h1>
-          <p className="font-medium text-2xl font-domine">
+          <p className="font-medium text-xl sm:text-2xl font-domine">
             Let's Talk Food
-            <span className=" pl-2 font-great-vibes text-customPurple text-2xl tracking-widest font-mediam">
-              Shall We ?
+            <span className="pl-2 font-great-vibes text-customPurple text-xl sm:text-2xl tracking-widest font-medium">
+              Shall We?
             </span>
           </p>
-          <p className="font-domine text-lg text-gray-500 py-10">
+          <p className="font-domine text-base sm:text-lg text-gray-500 py-4 sm:py-10">
             Well, we hope that’s why you’re here. Our recipes are designed for
             real, actual, every
             <br /> day life, and we try to focus on real foods and healthy
@@ -195,245 +195,263 @@ function StartHerePage() {
             <br /> on cheese on cheese, because health is all about balance,
             right?).
           </p>
-          <p className="font-domine text-lg text-gray-500">
+          <p className="font-domine text-base sm:text-lg text-gray-500">
             This is the place to find those recipes — everything from our most
             popular, to meal
             <br /> prep, to Instant Pot recipes, or if you just, like, have some
             sad greens in your fridge to
             <br /> use up and you need some inspiration.
           </p>
-          <p className="font-domine text-lg text-gray-500 py-10">
+          <p className="font-domine text-base sm:text-lg text-gray-500 py-4 sm:py-10">
             You’re here! Have fun. We hope you find something (many things) you
             love.
           </p>
         </div>
       </div>
-      <div className="bg-customPurple pt-5 pb-5">
-        <h1 className="text-4xl text-white font-semibold text-center py-10">
+
+      <div className="bg-customPurple pt-5 pb-5 px-4 sm:px-6">
+        <h1 className="text-2xl sm:text-4xl text-white font-semibold text-center py-6 sm:py-10">
           Search Our Recipes
         </h1>
-        <div className="flex items-center justify-center ">
-          <div className="relative w-full max-w-md">
+        <div className="flex items-center justify-center">
+          <div className="relative w-full sm:max-w-md">
             <input
               type="text"
               placeholder="Search by ingredient"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="font-semibold w-full py-3 pl-12 pr-4 bg-white border border-gray-400 rounded-lg shadow-md text-gray-700
-               focus:outline-none focus:ring-4 focus:ring-[#734060] transition duration-300 ease-in-out"
+                 focus:outline-none focus:ring-4 focus:ring-[#734060] transition duration-300 ease-in-out"
             />
             <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <MagnifyingGlassIcon class="h-6 w-6 text-gray-500" />
+              <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
             </div>
           </div>
         </div>
-        {/*function for search bar */}
-        {/* Recipe Modal for displaying search results */}
-        {isRecipeModalOpen && searchResults.length > 0 && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-            <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
-              <button
-                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
-                onClick={closeRecipeModal}
-              >
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-
-              <h2 className="text-2xl font-bold mb-4">Search Results</h2>
-
-              <div className="max-h-[70vh] overflow-y-auto">
-                {loading ? (
-                  <p className="text-center text-gray-500">Loading...</p>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {searchResults.map((meal) => (
-                      <div
-                        key={meal.idMeal}
-                        className="p-4 border rounded shadow-md hover:shadow-lg cursor-pointer"
-                        onClick={() => {
-                          setSelectedMeal(meal); // Store selected meal
-                          fetchMealDetails(meal.idMeal); // Fetch detailed meal info
-                          closeRecipeModal(); // Close the modal when a meal is clicked
-                        }}
-                      >
-                        <h3 className="text-lg mb-5 font-semibold">
-                          {meal.strMeal}
-                        </h3>
-                        <img
-                          src={meal.strMealThumb}
-                          alt={meal.strMeal}
-                          className="w-full h-40 object-cover mb-2 rounded"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-        {/* Detailed Recipe Modal for displaying selected meal details */}
-        {mealDetails && selectedMeal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-            <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
-              <button
-                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
-                onClick={closeDetailsModal} // Close the detailed modal
-              >
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-
-              <h2 className="text-2xl font-bold mb-4">{mealDetails.strMeal}</h2>
-              <img
-                src={mealDetails.strMealThumb}
-                alt={mealDetails.strMeal}
-                className="w-full h-48 object-cover rounded mb-4"
-              />
-              <p className="mt-4">{mealDetails.strInstructions}</p>
-
-              <ul className="mt-4">
-                <h3 className="font-bold">Ingredients:</h3>
-                {Array.from({ length: 20 }, (_, index) => {
-                  const ingredient = mealDetails[`strIngredient${index + 1}`];
-                  const measure = mealDetails[`strMeasure${index + 1}`];
-                  return (
-                    ingredient && (
-                      <li key={index}>
-                        {ingredient} - {measure}
-                      </li>
-                    )
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        <p className="text-zinc-300 text-lg tracking-widest text-center py-5 ">
-          or browse our favourites
-        </p>
       </div>
-      <div className="flex items-center justify-center py-10">
+
+      {/*function for search bar */}
+      {/* Recipe Modal for displaying search results */}
+      {isRecipeModalOpen && searchResults.length > 0 && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
+            <button
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+              onClick={closeRecipeModal}
+            >
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <h2 className="text-2xl font-bold mb-4">Search Results</h2>
+
+            <div className="max-h-[70vh] overflow-y-auto">
+              {loading ? (
+                <p className="text-center text-gray-500">Loading...</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {searchResults.map((meal) => (
+                    <div
+                      key={meal.idMeal}
+                      className="p-4 border rounded shadow-md hover:shadow-lg cursor-pointer"
+                      onClick={() => {
+                        setSelectedMeal(meal); // Store selected meal
+                        fetchMealDetails(meal.idMeal); // Fetch detailed meal info
+                        closeRecipeModal(); // Close the modal when a meal is clicked
+                      }}
+                    >
+                      <h3 className="text-lg mb-5 font-semibold">
+                        {meal.strMeal}
+                      </h3>
+                      <img
+                        src={meal.strMealThumb}
+                        alt={meal.strMeal}
+                        className="w-full h-40 object-cover mb-2 rounded"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Detailed Recipe Modal for displaying selected meal details */}
+      {mealDetails && selectedMeal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto">
+            <button
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+              onClick={closeDetailsModal} // Close the detailed modal
+            >
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <h2 className="text-2xl font-bold mb-4">{mealDetails.strMeal}</h2>
+            <img
+              src={mealDetails.strMealThumb}
+              alt={mealDetails.strMeal}
+              className="w-full h-48 object-cover rounded mb-4"
+            />
+            <p className="mt-4">{mealDetails.strInstructions}</p>
+
+            <ul className="mt-4">
+              <h3 className="font-bold">Ingredients:</h3>
+              {Array.from({ length: 20 }, (_, index) => {
+                const ingredient = mealDetails[`strIngredient${index + 1}`];
+                const measure = mealDetails[`strMeasure${index + 1}`];
+                return (
+                  ingredient && (
+                    <li key={index}>
+                      {ingredient} - {measure}
+                    </li>
+                  )
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      )}
+
+      <div className="text-zinc-300 text-lg tracking-widest text-center py-5">
+        or browse our favourites
+      </div>
+
+      <div className="flex items-center justify-center py-6 sm:py-10">
         <div>
-          <HeartIcon class="h-16 w-16 text-gray-500" />
+          <HeartIcon className="h-12 sm:h-16 w-12 sm:w-16 text-gray-500" />
         </div>
         <div>
-          <h1 className="text-3xl text-customPurple font-semibold font-domine pl-3">
+          <h1 className="text-2xl sm:text-3xl text-customPurple font-semibold font-domine pl-3">
             Random & Healthy Recipes
           </h1>
         </div>
       </div>
 
-      <div className="flex justify-center justify-evenly">
-        <div className="flex border-2 border-slate-400 w-2/5 h-64 items-center justify-center py-5 px-5 justify-around ">
-          <div>
-            <img src={healthy1} alt="healthy1" className="h-52 w-52" />
+      <div className="flex flex-wrap justify-center sm:justify-evenly gap-6 py-6">
+        {/* Card 1 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={healthy1}
+              alt="healthy1"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
           </div>
-          <div className="text-center">
-            <h1 className="text-xl font-bold">Sesame Noodle Bowls</h1>
-            <p className="font-domine text-lg text-gray-600 py-5">
-              Meal Prep Sesame Noodle Bowls! Fork-
-              <br />
-              twirly noodles, an easy creamy sesame
-              <br />
-              sauce, perfect browned chicken,
-              <br /> and all the veg YUM.
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl font-bold">
+              Sesame Noodle Bowls
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600 py-3 sm:py-5">
+              Meal Prep Sesame Noodle Bowls! Fork- twirly noodles, an easy
+              creamy sesame sauce, perfect browned chicken, and all the veg YUM.
             </p>
           </div>
         </div>
 
-        <div className="flex border-2 border-slate-400 w-2/5 h-64 items-center justify-center py-5 px-5 justify-around">
-          <div>
-            <img src={healthy2} alt="healthy2" className="h-52 w-52" />
+        {/* Card 2 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={healthy2}
+              alt="healthy2"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
           </div>
-          <div className="text-center">
-            <h1 className="text-xl font-bold">Velvet Sunset Pasta</h1>
-            <p className="font-domine text-lg text-gray-600 py-5">
-              This creamy pasta dish captures the
-              <br />
-              essence of a sunset with its vibrant
-              <br />
-              blend of sun-dried tomatoes, roasted
-              <br />
-              garlic, and a velvety Parmesan sauce.
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl font-bold mt-4 sm:mt-8">
+              Velvet Sunset Pasta
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600  py-3 sm:py-5">
+              This creamy pasta dish captures the essence of a sunset with its
+              vibrant blend of sun-dried tomatoes, roasted garlic, and a velvety
+              Parmesan sauce.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center justify-evenly py-10">
-        <div className="flex border-2 border-slate-400 h-64 w-2/5 items-center justify-center py-5 px-5 justify-around ">
-          <div>
-            <img src={healthy3} alt="healthy3" className="h-52 w-52" />
+      <div className="flex flex-wrap justify-center sm:justify-evenly gap-6 py-6">
+        {/* Card 1 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={healthy3}
+              alt="healthy3"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
           </div>
-          <div className="text-center">
-            <h1 className="text-xl font-bold">Saffron Ember Chicken Curry</h1>
-            <p className="font-domine text-lg text-gray-600 py-5">
-              This flavorful dish blends tender
-              <br />
-              chicken with rich spices, creating
-              <br />
-              a symphony of warmth and depth.
-              <br />
-              Infused with aromatic saffron.
-              <br />
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl mt-4 font-bold">
+              Saffron Ember Chicken Curry
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600 py-3 sm:py-5">
+              This flavorful dish blends tender chicken with rich spices,
+              creating a symphony of warmth and depth. Infused with aromatic
+              saffron.
             </p>
           </div>
         </div>
 
-        <div className="flex border-2 border-slate-400 h-64 w-2/5 items-center justify-center py-5 px-5 justify-around">
-          <div>
-            <img src={healthy4} alt="healthy4" className="h-52 w-52" />
+        {/* Card 2 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img
+              src={healthy4}
+              alt="healthy4"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
+            />
           </div>
-          <div className="text-center">
-            <h1 className="text-xl font-bold">Golden Rice with Papadam</h1>
-            <p className="font-domine text-lg text-gray-600 py-5">
-              This quintessential South Indian
-              <br />
-              dish features fragrant, fluffy rice
-              <br />
-              paired with crispy, golden papadam
-              <br />
-              for a delightful contrast in texture.
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl font-bold">
+              Golden Rice with Papadam
+            </h1>
+            <p className="font-domine text-base sm:text-lg text-gray-600 py-3 sm:py-5">
+              This quintessential South Indian dish features fragrant, fluffy
+              rice paired with crispy, golden papadam for a delightful contrast
+              in texture.
             </p>
           </div>
         </div>
       </div>
+
       <div className="flex items-center justify-center py-5">
         <button
-          class="bg-[#734060] text-white font-semibold py-2 w-96 rounded-md shadow-md hover:bg-[#5a3049] hover:scale-105 hover:opacity-90
-        focus:ring-4 focus:ring-[#734060] focus:outline-none active:scale-95 transition duration-300 ease-in-out"
+          className="bg-[#734060] text-white font-semibold py-2 px-4 w-full sm:w-96 rounded-md shadow-md 
+      hover:bg-[#5a3049] hover:scale-105 hover:opacity-90
+      focus:ring-4 focus:ring-[#734060] focus:outline-none active:scale-95 
+      transition duration-300 ease-in-out"
           onClick={fetchRandomMeal}
         >
           View Random Meals
         </button>
       </div>
+
       {/*function for random meals */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -484,103 +502,95 @@ function StartHerePage() {
           <img
             src={mealHead}
             alt="mealHead"
-            className="h-16 w-16 text-gray-500"
+            className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 text-gray-500" // Adjust size for different screen sizes
           />
         </div>
         <div>
-          <h1 className="text-3xl text-customPurple font-semibold font-domine pl-3">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl text-customPurple font-semibold font-domine pl-3">
             Meal Prep Recipes
           </h1>
         </div>
       </div>
 
-      <div className="flex justify-center justify-evenly">
-        <div className="flex border-2 border-slate-400 w-2/5 h-64 items-center justify-center py-5 px-5 justify-around ">
-          <div>
-            <img src={meal1} alt="meal1" className="h-52 w-52" />
+      <div className="flex flex-wrap justify-center gap-6 py-10">
+        {/* Card 1 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img src={meal1} alt="meal1" className="h-52 w-52 object-cover" />
           </div>
-          <div className="text-center">
-            <h1 className="text-xl font-bold">Royal Saffron Chicken Biryani</h1>
+          <div className="text-left pl-4">
+            <h1 className="text-xl mt-5 font-bold">
+              Royal Saffron Chicken Biryani
+            </h1>
             <p className="font-domine text-lg text-gray-600 py-5">
               This luxurious biryani is a<br />
-              celebration of tender chicken,
-              <br />
-              long-grain basmati rice, and
-              <br />
-              aromatic spices, layered with
-              <br />
-              the golden richness of saffron.
+              celebration of tender chicken, long-grain basmati rice, and
+              aromatic spices, layered with the golden richness of saffron.
             </p>
           </div>
         </div>
 
-        <div className="flex border-2 border-slate-400 w-2/5 h-64 items-center justify-center py-5 px-5 justify-around">
-          <div>
-            <img src={meal2} alt="meal2" className="h-52 w-52" />
+        {/* Card 2 */}
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-64 items-center p-5">
+          <div className="flex-shrink-0">
+            <img src={meal2} alt="meal2" className="h-52 w-52 object-cover" />
           </div>
-          <div className="text-center">
+          <div className="text-left pl-4">
             <h1 className="text-xl font-bold">Soulful Harmony Platter</h1>
             <p className="font-domine text-lg text-gray-600 py-5">
-              This comforting meal brings
-              <br />
-              together the simplicity of
-              <br />
-              white rice with hearty soups,
-              <br />
-              rich stews, and a flavorful
-              <br /> chicken curry.
+              This comforting meal brings together the simplicity of white rice
+              with hearty soups, rich stews, and a flavorful chicken curry.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center justify-evenly py-10">
-        <div className="flex border-2 border-slate-400 h-64 w-2/5 items-center justify-center py-5 px-5 justify-around ">
-          <div>
-            <img src={meal3} alt="meal3" className="h-52 w-52" />
+      <div className="flex flex-wrap justify-center gap-6 py-10">
+        {/* Card 1 */}
+        <div className="flex border-2 border-slate-400 h-64 w-full sm:w-2/5 items-center p-5">
+          <div className="flex-shrink-0">
+            <img src={meal3} alt="meal3" className="h-52 w-52 object-cover" />
           </div>
-          <div className="text-center">
-            <h1 className="text-xl font-bold">Maharaja's Delight Thaali</h1>
+          <div className="text-left pl-4">
+            <h1 className="text-xl font-bold mt-5 ">
+              Maharaja's Delight Thaali
+            </h1>
             <p className="font-domine text-lg text-gray-600 py-5">
-              This exquisite North Indian
-              <br />
-              platter features soft, freshly
-              <br />
-              made rotis, fragrant vegetable
-              <br />
-              pulao, and a rich paneer curry
-              <br /> that’s simmered in aromatic spices.
+              This exquisite North Indian platter features soft, freshly made
+              rotis, fragrant vegetable pulao, and a rich paneer curry that’s
+              simmered in aromatic spices.
             </p>
           </div>
         </div>
 
-        <div className="flex border-2 border-slate-400 h-64 w-2/5 items-center justify-center py-5 px-5 justify-around">
-          <div>
-            <img src={meal4} alt="meal4" className="h-52 w-52" />
+        {/* Card 2 */}
+        <div className="flex border-2 border-slate-400 h-64 w-full sm:w-2/5 items-center p-5">
+          <div className="flex-shrink-0">
+            <img src={meal4} alt="meal4" className="h-52 w-52 object-cover" />
           </div>
-          <div className="text-center">
+          <div className="text-left pl-4">
             <h1 className="text-xl font-bold">Heritage Feast Thaali</h1>
             <p className="font-domine text-lg text-gray-600 py-5">
-              From spicy curries and tangy
-              <br />
-              sambar to refreshing curd and
-              <br />
-              crispy papadam, each dish showcases
-              <br />
-              the rich culinary heritage of the region.
+              From spicy curries and tangy sambar to refreshing curd and crispy
+              papadam, each dish showcases the rich culinary heritage of the
+              region.
             </p>
           </div>
         </div>
       </div>
+
       <div className="flex items-center justify-center py-5">
         <button
-          class="bg-[#734060] text-white font-semibold py-2 w-96 rounded-md shadow-md hover:bg-[#5a3049] hover:scale-105 hover:opacity-90
-        focus:ring-4 focus:ring-[#734060] focus:outline-none active:scale-95 transition duration-300 ease-in-out"
+          className="bg-[#734060] text-white font-semibold py-2 px-4 w-full sm:w-96 rounded-md shadow-md 
+      hover:bg-[#5a3049] hover:scale-105 hover:opacity-90
+      focus:ring-4 focus:ring-[#734060] focus:outline-none active:scale-95 
+      transition duration-300 ease-in-out"
           onClick={fetchSeafoodRecipes}
         >
           View Seafood Recipes
         </button>
       </div>
+
       {/*function for sea food */}
       {/* Recipe Modal for displaying search results */}
       {isSeafoodRecipeModalOpen && searchSeafoodResults.length > 0 && (

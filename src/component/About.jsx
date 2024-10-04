@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 const About = () => {
 
 const navigate = useNavigate();
-  const [firstName, setFirstName] = useState("");
+ 
 
 
   const [fullName, setFullName] = useState("");

@@ -68,14 +68,14 @@ function NavBar() {
         </p>
       </div>
       <div className="bg-white shadow-md py-4">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
           <div>
             <h1 className="font-domine font-semibold text-5xl text-customPurple">
               Recipe Box
             </h1>
           </div>
 
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-8 mt-4 md:mt-0">
             <p className="text-lg font-semibold cursor-pointer">HOME</p>
             <p
               className="text-lg font-semibold cursor-pointer"
@@ -96,10 +96,11 @@ function NavBar() {
             >
               START HERE
             </p>
-            <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
           </div>
         </div>
       </div>
+
+      
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
@@ -138,7 +139,8 @@ function NavBar() {
 
               <button
                 type="submit"
-                className="w-full h-12 bg-green-600 text-white hover:bg-green-700 rounded-md p-3" onClick={handleSubmit}
+                className="w-full h-12 bg-green-600 text-white hover:bg-green-700 rounded-md p-3"
+                onClick={handleSubmit}
               >
                 Submit
               </button>
