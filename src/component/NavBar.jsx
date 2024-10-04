@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
 
 function NavBar() {
   const navigate = useNavigate();
