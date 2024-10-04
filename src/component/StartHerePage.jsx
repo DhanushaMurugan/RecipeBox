@@ -11,7 +11,7 @@ import meal1 from "../Images/meal1.png";
 import meal2 from "../Images/meal2.jpg";
 import meal3 from "../Images/meal3.png";
 import meal4 from "../Images/meal4.png";
-import mealHead from "../Images/mealHead.png";
+// import mealHead from "../Images/mealHead.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
 function StartHerePage() {
