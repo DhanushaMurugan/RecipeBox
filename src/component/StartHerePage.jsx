@@ -398,16 +398,16 @@ function StartHerePage() {
 
       <div className="flex flex-wrap justify-center sm:justify-evenly gap-6 py-6">
         {/* Card 1 */}
-        <div className="flex flex-col sm:flex-row border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
+        <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
           <div className="flex-shrink-0">
             <img
               src={healthy3}
               alt="healthy3"
-              className="h-36 sm:h-52 w-full sm:w-52 object-cover rounded-lg"
+              className="h-36 sm:h-52 w-52 object-cover rounded-lg" // Set a consistent width for the image
             />
           </div>
-          <div className="text-left sm:pl-4 mt-4 sm:mt-0">
-            <h1 className="text-lg sm:text-xl font-bold">
+          <div className="text-left pl-4">
+            <h1 className="text-lg sm:text-xl mt-4 font-bold">
               Saffron Ember Chicken Curry
             </h1>
             <p className="font-domine text-base sm:text-lg text-gray-600 py-3 sm:py-5">
@@ -417,7 +417,6 @@ function StartHerePage() {
             </p>
           </div>
         </div>
-
         {/* Card 2 */}
         <div className="flex border-2 border-slate-400 w-full sm:w-2/5 h-auto sm:h-64 items-center p-5">
           <div className="flex-shrink-0">
