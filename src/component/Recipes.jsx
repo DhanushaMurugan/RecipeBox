@@ -420,9 +420,7 @@ function Recipes() {
                         alt={meal.strMeal}
                         className="w-full h-40 object-cover mb-2 rounded"
                       />
-                      <h3 className="text-lg font-semibold">
-                        Meal Id: {meal.idMeal}
-                      </h3>
+                      
                     </div>
                   ))}
                 </div>
@@ -545,9 +543,7 @@ function Recipes() {
                         alt={meal.strMeal}
                         className="w-full h-40 object-cover mb-2 rounded"
                       />
-                      <h3 className="text-lg font-semibold">
-                        Meal Id: {meal.idMeal}
-                      </h3>
+                      
                     </div>
                   ))}
                 </div>
@@ -668,9 +664,7 @@ function Recipes() {
                         alt={meal.strMeal}
                         className="w-full h-40 object-cover mb-2 rounded"
                       />
-                      <h3 className="text-lg font-semibold">
-                        Meal Id: {meal.idMeal}
-                      </h3>
+                      
                     </div>
                   ))}
                 </div>

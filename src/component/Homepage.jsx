@@ -127,6 +127,25 @@ function Homepage() {
             real, actual, every day life
           </span>
         </p>
+        {/* Search bar */}
+        <div className="flex items-center justify-center pt-4 pb-4">
+          <div className="relative w-full max-w-md">
+            <form>
+              <input
+                type="text"
+                placeholder="Search for a recipe..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)} // Capture user input and trigger search
+                className="font-semibold w-full py-3 pl-12 pr-4 bg-white border border-gray-400 rounded-lg
+          shadow-md text-gray-700 focus:outline-none focus:ring-4 focus:ring-[#734060] transition duration-300 ease-in-out
+          sm:text-base text-lg" // Adjust text size for smaller screens
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
+              </div>
+            </form>
+          </div>
+        </div>
         <div className="flex flex-wrap justify-center gap-6 py-5">
           {/* Breakfast Card */}
           <div className="w-full sm:w-72 text-center">
@@ -315,26 +334,6 @@ function Homepage() {
             </div>
           </div>
         )}
-
-        {/* Search bar */}
-        <div className="flex items-center justify-center pt-16">
-          <div className="relative w-full max-w-md">
-            <form>
-              <input
-                type="text"
-                placeholder="Search for a recipe..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} // Capture user input and trigger search
-                className="font-semibold w-full py-3 pl-12 pr-4 bg-white border border-gray-400 rounded-lg
-          shadow-md text-gray-700 focus:outline-none focus:ring-4 focus:ring-[#734060] transition duration-300 ease-in-out
-          sm:text-base text-lg" // Adjust text size for smaller screens
-              />
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
-              </div>
-            </form>
-          </div>
-        </div>
 
         {/*function code to serach bar */}
         {/* Recipe Modal for displaying search results */}
@@ -530,14 +529,14 @@ function Homepage() {
                 cooking skills. Join us in celebrating the joy of cooking.
               </p>
             </div>
-            <div className="pl-5 mt-5 md:mt-0">
+            <div className=" mt-5 md:mt-0">
               <img
                 src={recipe5}
                 alt="recipe5"
                 className="h-auto w-full md:w-96 shadow-lg object-cover rounded-lg"
               />
             </div>
-            <div className="pl-5 mt-5 md:mt-0">
+            <div className=" mt-5 md:mt-0">
               <img
                 src={recipe6}
                 alt="recipe6"
@@ -546,7 +545,6 @@ function Homepage() {
             </div>
           </div>
 
-          
           <div className="mt-16 text-center">
             <div className="w-full mx-auto  bg-customPurple p-8 shadow-lg rounded-lg ">
               <h3 className="font-semibold text-3xl font-great-vibes text-amber-300 tracking-widest py-6">
